@@ -56,7 +56,7 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
 
         <div className="flex flex-col gap-4 mb-8">
           <a
-            href="https://chat.whatsapp.com/LwJFKWYTY3e8ZtB02huyjU?mode=gi_t"
+            href={import.meta.env.VITE_WHATSAPP_LINK || "https://chat.whatsapp.com/LwJFKWYTY3e8ZtB02huyjU?mode=gi_t"}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-5 px-8 rounded-2xl shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 overflow-hidden"
