@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { 
-  ArrowRight, 
-  Loader2, 
-  Code, 
-  Palette, 
-  Lightbulb, 
-  GraduationCap, 
-  Briefcase, 
+import {
+  ArrowRight,
+  Loader2,
+  Code,
+  Palette,
+  Lightbulb,
+  GraduationCap,
+  Briefcase,
   User
 } from 'lucide-react';
 import { registrationSchema, RegistrationFormData } from '../../lib/schema';
@@ -75,7 +75,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const onSubmit = async (data: RegistrationFormData) => {
     setIsSubmitting(true);
-    
+
     // Auto-prepend +94 prefix and remove leading zero if present
     const formattedData = {
       ...data,
@@ -107,7 +107,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
@@ -117,16 +117,16 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         {isWaitlist ? 'Join the Waitlist' : 'Secure Your Spot'}
       </h2>
       <p className="text-teal-100/50 text-xs mb-6 font-medium">
-        {isWaitlist 
-          ? "We've reached our 100 seat capacity. Join the waitlist for priority access to the next session!" 
+        {isWaitlist
+          ? "We've reached our 100 seat capacity. Join the waitlist for priority access to the next session!"
           : "Join Sri Lanka's most exclusive AI session. Only 100 spots available."}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <motion.div
-           initial={{ opacity: 0, y: 10 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ delay: 0.4 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
         >
           <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
             Full Name
@@ -134,7 +134,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           <input
             {...register('name')}
             className={cn(
-              "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
+              "w-full bg-slate-800/80 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
               errors.name && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="Amal Silva"
@@ -143,9 +143,9 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         </motion.div>
 
         <motion.div
-           initial={{ opacity: 0, y: 10 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ delay: 0.5 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
         >
           <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
             Email Address
@@ -154,7 +154,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             {...register('email')}
             type="email"
             className={cn(
-              "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
+              "w-full bg-slate-800/80 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
               errors.email && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="amal@colombo.tech"
@@ -164,9 +164,9 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <motion.div
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.6 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
           >
             <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
               Age
@@ -175,7 +175,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               {...register('age')}
               type="number"
               className={cn(
-                "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
+                "w-full bg-slate-800/80 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
                 errors.age && "border-red-500/50 focus:ring-red-500/10"
               )}
               placeholder="28"
@@ -183,9 +183,9 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             {errors.age && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.age.message}</p>}
           </motion.div>
           <motion.div
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.6 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
           >
             <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
               Phone (LK)
@@ -199,7 +199,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 {...register('phone')}
                 type="tel"
                 className={cn(
-                  "w-full bg-slate-800/80 border border-emerald-500/20 text-white pl-16 pr-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
+                  "w-full bg-slate-800/80 border border-emerald-500/20 text-emerald-400 pl-16 pr-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
                   errors.phone && "border-red-500/50 focus:ring-red-500/10"
                 )}
                 placeholder="701 234567"
@@ -210,9 +210,9 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         </div>
 
         <motion.div
-           initial={{ opacity: 0, y: 10 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ delay: 0.7 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
         >
           <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-3 opacity-70 text-center">
             Identify Your Journey
@@ -228,8 +228,8 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                   onClick={() => setValue('role', role.id)}
                   className={cn(
                     "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 group relative overflow-hidden",
-                    isActive 
-                      ? "bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                    isActive
+                      ? "bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]"
                       : "bg-slate-700/20 border-emerald-500/10 hover:border-emerald-500/30 hover:bg-slate-700/40"
                   )}
                 >
@@ -263,8 +263,8 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           disabled={isSubmitting}
           className={cn(
             "group w-full font-black py-4 px-4 rounded-xl text-xs uppercase tracking-[0.2em] transition-all hover:shadow-2xl flex items-center justify-center gap-2 disabled:cursor-not-allowed",
-            isWaitlist 
-              ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 hover:shadow-amber-500/40 text-slate-900 shadow-xl" 
+            isWaitlist
+              ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 hover:shadow-amber-500/40 text-slate-900 shadow-xl"
               : "bg-blue-800 hover:bg-blue-700 hover:shadow-blue-500/40 text-white shadow-xl"
           )}
         >
