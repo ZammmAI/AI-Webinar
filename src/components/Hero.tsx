@@ -74,19 +74,19 @@ export function Hero() {
 
       {/* Powered by AOB */}
       <div className="pt-4 border-t border-emerald-500/20">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="flex flex-col">
-            <p className="text-teal-100/30 text-[9px] uppercase tracking-[0.3em] font-bold">Powered by</p>
-            <p className="text-white font-black text-lg tracking-tight leading-none">
-              <span className="gradient-text">Academy</span>{' '}
-              <span className="text-white/80 text-sm font-light">of</span>{' '}
-              <span className="gradient-text">Billionaires</span>
+            <p className="text-teal-100/30 text-[9px] uppercase tracking-[0.3em] font-bold mb-1">Powered by</p>
+            <p className="text-white/70 font-light text-sm tracking-tight leading-none">
+              Academy of Billionaires
             </p>
           </div>
           <div className="ml-auto">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/30 to-teal-500/30 border border-emerald-400/30 flex items-center justify-center">
-              <span className="text-emerald-300 font-black text-sm">AOB</span>
-            </div>
+            <img
+              src="/aob-logo.png"
+              alt="Academy of Billionaires"
+              className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"
+            />
           </div>
         </div>
       </div>
