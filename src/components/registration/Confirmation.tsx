@@ -1,5 +1,6 @@
-import { CheckCircle2, Sparkles } from 'lucide-react';
+import { CheckCircle2, Sparkles, Check } from 'lucide-react';
 import { RegistrationFormData } from '../../lib/schema';
+import { motion } from 'framer-motion';
 
 interface ConfirmationProps {
   data: RegistrationFormData;
@@ -8,12 +9,22 @@ interface ConfirmationProps {
 
 export function Confirmation({ data, onReset }: ConfirmationProps) {
   return (
-    <div className="pulse-glow max-w-2xl mx-auto">
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="pulse-glow max-w-2xl mx-auto"
+    >
       <div className="bg-gradient-to-br from-emerald-900/40 to-slate-900/90 backdrop-blur-xl border border-emerald-400/50 rounded-2xl p-12 shadow-2xl text-center">
         <div className="mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/50 mb-4">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400" />
-          </div>
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/50 mb-4"
+          >
+            <Check className="w-8 h-8 text-emerald-400" />
+          </motion.div>
           <h2 className="text-3xl font-black gradient-text mb-2">Welcome Aboard!</h2>
           <p className="text-teal-100 text-lg font-light">
             Your spot is reserved for the AI Webinar

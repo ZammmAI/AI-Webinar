@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
 import { cn } from '../../lib/utils';
+import { motion } from 'framer-motion';
 
 interface RegistrationFormProps {
   onSuccess: (data: RegistrationFormData) => void;
@@ -71,11 +72,20 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 shadow-2xl pulse-glow">
+    <motion.div 
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 shadow-2xl pulse-glow"
+    >
       <h2 className="text-2xl font-black gradient-text mb-6">Secure Your Spot</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div>
+        <motion.div
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.4 }}
+        >
           <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
             Full Name
           </label>
@@ -88,9 +98,13 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             placeholder="Amal Silva"
           />
           {errors.name && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.name.message}</p>}
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.5 }}
+        >
           <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
             Email Address
           </label>
@@ -104,10 +118,14 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             placeholder="amal@colombo.tech"
           />
           {errors.email && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.email.message}</p>}
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
+          <motion.div
+             initial={{ opacity: 0, y: 10 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.6 }}
+          >
             <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
               Age
             </label>
@@ -121,8 +139,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               placeholder="28"
             />
             {errors.age && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.age.message}</p>}
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+             initial={{ opacity: 0, y: 10 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.6 }}
+          >
             <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
               Phone (LK)
             </label>
@@ -136,10 +158,14 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               placeholder="+94 701 234567"
             />
             {errors.phone && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.phone.message}</p>}
-          </div>
+          </motion.div>
         </div>
 
-        <div>
+        <motion.div
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.7 }}
+        >
           <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-3 opacity-70 text-center">
             Identify Your Journey
           </label>
@@ -180,9 +206,11 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           </div>
           <input type="hidden" {...register('role')} />
           {errors.role && <p className="text-red-400 text-[10px] mt-2 text-center uppercase font-bold">{errors.role.message}</p>}
-        </div>
+        </motion.div>
 
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isSubmitting}
           className="group w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 text-slate-900 font-black py-4 px-4 rounded-xl text-xs uppercase tracking-[0.2em] transition-all hover:shadow-2xl hover:shadow-emerald-500/40 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
@@ -198,12 +226,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </>
           )}
-        </button>
+        </motion.button>
       </form>
 
       <p className="text-center text-teal-300/60 text-xs mt-6 font-light">
         Secure • Spam-free • Sri Lankan community
       </p>
-    </div>
+    </motion.div>
   );
 }
