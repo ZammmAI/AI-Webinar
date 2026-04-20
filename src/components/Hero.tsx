@@ -73,20 +73,33 @@ export function Hero() {
       </div>
 
       {/* Powered by AOB */}
-      <div className="pt-4 border-t border-emerald-500/20">
-        <div className="flex items-center gap-4">
+      <div className="pt-5 border-t border-white/10">
+        <p className="text-white/25 text-[8px] uppercase tracking-[0.4em] font-bold mb-3">Powered by</p>
+        <div className="flex items-center gap-4 bg-black/20 border border-white/5 rounded-xl px-4 py-3 backdrop-blur-sm">
+          <img
+            src="/aob-logo.png"
+            alt="Academy of Billionaires"
+            className="h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(212,175,55,0.5)] flex-shrink-0"
+          />
           <div className="flex flex-col">
-            <p className="text-teal-100/30 text-[9px] uppercase tracking-[0.3em] font-bold mb-1">Powered by</p>
-            <p className="text-white/70 font-light text-sm tracking-tight leading-none">
-              Academy of Billionaires
+            <p
+              className="text-[10px] font-semibold tracking-[0.25em] text-amber-300/70 leading-none mb-1"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              ACADEMY OF
             </p>
-          </div>
-          <div className="ml-auto">
-            <img
-              src="/aob-logo.png"
-              alt="Academy of Billionaires"
-              className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"
-            />
+            <p
+              className="text-white font-bold tracking-[0.15em] leading-none text-xl"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              BILLIONAIRES
+            </p>
+            <p
+              className="text-amber-400/50 text-[8px] tracking-[0.3em] font-medium mt-1 leading-none"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              EDUCATE · ELEVATE · DOMINATE
+            </p>
           </div>
         </div>
       </div>
