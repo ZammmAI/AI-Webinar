@@ -25,9 +25,9 @@ function App() {
           <div className="absolute -bottom-32 left-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-[shimmer_3s_ease-in-out_infinite]"></div>
         </div>
 
-        <div className="relative z-10 w-full max-w-4xl">
+        <div className="relative z-10 w-full max-w-5xl">
           {!submittedData ? (
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               <Hero />
               <RegistrationForm onSuccess={handleSuccess} />
             </div>
