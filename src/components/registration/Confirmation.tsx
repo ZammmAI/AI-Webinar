@@ -1,4 +1,4 @@
-import { CheckCircle2, Sparkles, Check } from 'lucide-react';
+import { Check, Sparkles } from 'lucide-react';
 import { RegistrationFormData } from '../../lib/schema';
 import { motion } from 'framer-motion';
 
@@ -84,6 +84,6 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
           Register Another Person
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
