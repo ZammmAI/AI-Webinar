@@ -51,8 +51,9 @@ export function Hero() {
             <Users className="w-4 h-4 text-emerald-400" />
           </div>
           <div>
-            <p className="text-teal-100/50 text-[10px] uppercase tracking-widest font-bold">Capacity</p>
-            <p className="text-white font-semibold text-sm">Only 100 Participants · Via WhatsApp</p>
+            <p className="text-teal-100/50 text-[10px] uppercase tracking-widest font-bold">Platform</p>
+            <p className="text-white font-semibold text-sm">Zoom · Only 100 Participants</p>
+            <p className="text-emerald-400/60 text-[10px] mt-0.5">Link shared via WhatsApp group only</p>
           </div>
         </div>
       </div>

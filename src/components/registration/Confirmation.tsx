@@ -36,10 +36,10 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
             ⚠️ Important Note:
           </p>
           <p className="text-teal-100 text-sm leading-relaxed">
-            We will <span className="text-amber-300 font-bold">NOT</span> send the webinar links via email. 
-            All links and materials will be shared <span className="text-emerald-300 font-bold">ONLY</span> through our private WhatsApp group.
+            The webinar will be hosted on <span className="text-white font-bold">Zoom</span>.
+            Your Zoom link will be shared <span className="text-emerald-300 font-bold">ONLY</span> through our private WhatsApp group — not via email.
             <br /><br />
-            <span className="text-emerald-400 font-semibold italic">Limited to the first 100 participants. Join now to secure your access!</span>
+            <span className="text-emerald-400 font-semibold italic">Limited to the first 100 participants. Join the group now to get your link!</span>
           </p>
         </div>
 
