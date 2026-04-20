@@ -6,7 +6,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
+export function MainLayout({ children }: LayoutProps) {
   return (
     <HelmetProvider>
       <SEO />
