@@ -1,6 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Loader2, 
+  Code, 
+  Palette, 
+  Lightbulb, 
+  GraduationCap, 
+  Briefcase, 
+  User 
+} from 'lucide-react';
 import { registrationSchema, RegistrationFormData } from '../../lib/schema';
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -11,12 +20,23 @@ interface RegistrationFormProps {
   onSuccess: (data: RegistrationFormData) => void;
 }
 
+const ROLES = [
+  { id: 'developer', label: 'Developer', icon: Code },
+  { id: 'designer', label: 'Designer', icon: Palette },
+  { id: 'entrepreneur', label: 'Founder', icon: Lightbulb },
+  { id: 'student', label: 'Student', icon: GraduationCap },
+  { id: 'manager', label: 'Manager', icon: Briefcase },
+  { id: 'other', label: 'Other', icon: User },
+] as const;
+
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
@@ -24,6 +44,8 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       role: 'developer',
     }
   });
+
+  const selectedRole = watch('role');
 
   const onSubmit = async (data: RegistrationFormData) => {
     setIsSubmitting(true);
@@ -48,103 +70,128 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 shadow-2xl pulse-glow">
       <h2 className="text-2xl font-black gradient-text mb-6">Secure Your Spot</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <label className="block text-teal-100 text-sm font-semibold mb-2">
+          <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
             Full Name
           </label>
           <input
             {...register('name')}
             className={cn(
-              "w-full bg-slate-700/50 border border-emerald-500/50 text-teal-50 px-4 py-3 rounded-lg text-sm placeholder-teal-400/50 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition-all",
-              errors.name && "border-red-500/50 focus:ring-red-500/30"
+              "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+              errors.name && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="Amal Silva"
           />
-          {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
+          {errors.name && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.name.message}</p>}
         </div>
 
         <div>
-          <label className="block text-teal-100 text-sm font-semibold mb-2">
+          <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
             Email Address
           </label>
           <input
             {...register('email')}
             type="email"
             className={cn(
-              "w-full bg-slate-700/50 border border-emerald-500/50 text-teal-50 px-4 py-3 rounded-lg text-sm placeholder-teal-400/50 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition-all",
-              errors.email && "border-red-500/50 focus:ring-red-500/30"
+              "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+              errors.email && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="amal@colombo.tech"
           />
-          {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.email.message}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-teal-100 text-sm font-semibold mb-2">
+            <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
               Age
             </label>
             <input
               {...register('age')}
               type="number"
               className={cn(
-                "w-full bg-slate-700/50 border border-emerald-500/50 text-teal-50 px-4 py-3 rounded-lg text-sm placeholder-teal-400/50 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition-all",
-                errors.age && "border-red-500/50 focus:ring-red-500/30"
+                "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+                errors.age && "border-red-500/50 focus:ring-red-500/10"
               )}
               placeholder="28"
             />
-            {errors.age && <p className="text-red-400 text-xs mt-1">{errors.age.message}</p>}
+            {errors.age && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.age.message}</p>}
           </div>
           <div>
-            <label className="block text-teal-100 text-sm font-semibold mb-2">
+            <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
               Phone (LK)
             </label>
             <input
               {...register('phone')}
               type="tel"
               className={cn(
-                "w-full bg-slate-700/50 border border-emerald-500/50 text-teal-50 px-4 py-3 rounded-lg text-sm placeholder-teal-400/50 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition-all",
-                errors.phone && "border-red-500/50 focus:ring-red-500/30"
+                "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+                errors.phone && "border-red-500/50 focus:ring-red-500/10"
               )}
               placeholder="+94 701 234567"
             />
-            {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
+            {errors.phone && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.phone.message}</p>}
           </div>
         </div>
 
         <div>
-          <label className="block text-teal-100 text-sm font-semibold mb-2">
-            Your Role
+          <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-3 opacity-70 text-center">
+            Identify Your Journey
           </label>
-          <select
-            {...register('role')}
-            className="w-full bg-slate-700/50 border border-emerald-500/50 text-teal-50 px-4 py-3 rounded-lg text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition-all"
-          >
-            <option value="developer">Developer</option>
-            <option value="designer">Designer</option>
-            <option value="entrepreneur">Entrepreneur</option>
-            <option value="student">Student</option>
-            <option value="manager">Manager</option>
-            <option value="other">Other</option>
-          </select>
-          {errors.role && <p className="text-red-400 text-xs mt-1">{errors.role.message}</p>}
+          <div className="grid grid-cols-3 gap-2">
+            {ROLES.map((role) => {
+              const Icon = role.icon;
+              const isActive = selectedRole === role.id;
+              return (
+                <button
+                  key={role.id}
+                  type="button"
+                  onClick={() => setValue('role', role.id)}
+                  className={cn(
+                    "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 group relative overflow-hidden",
+                    isActive 
+                      ? "bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                      : "bg-slate-700/20 border-emerald-500/10 hover:border-emerald-500/30 hover:bg-slate-700/40"
+                  )}
+                >
+                  <Icon className={cn(
+                    "w-5 h-5 transition-transform group-hover:scale-110",
+                    isActive ? "text-emerald-400" : "text-teal-100/50"
+                  )} />
+                  <span className={cn(
+                    "text-[10px] font-bold uppercase tracking-tighter",
+                    isActive ? "text-emerald-300" : "text-teal-100/30"
+                  )}>
+                    {role.label}
+                  </span>
+                  {isActive && (
+                    <div className="absolute top-0 right-0 p-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <input type="hidden" {...register('role')} />
+          {errors.role && <p className="text-red-400 text-[10px] mt-2 text-center uppercase font-bold">{errors.role.message}</p>}
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 text-slate-900 font-bold py-3 px-4 rounded-lg text-sm uppercase tracking-wider transition-all hover:shadow-lg hover:shadow-emerald-500/50 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
+          className="group w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 text-slate-900 font-black py-4 px-4 rounded-xl text-xs uppercase tracking-[0.2em] transition-all hover:shadow-2xl hover:shadow-emerald-500/40 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Registering...
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Processing...
             </>
           ) : (
             <>
-              Register Now
-              <ArrowRight className="w-4 h-4" />
+              Secure Seat Now
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </>
           )}
         </button>

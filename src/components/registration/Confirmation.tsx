@@ -31,24 +31,40 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
           </div>
         </div>
 
-        <div className="bg-teal-500/10 border border-teal-400/30 rounded-xl p-6 mb-8">
-          <p className="text-teal-100 font-light mb-4">
-            Check your email for webinar details and joining instructions. We'll see you soon!
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 mb-8 text-left">
+          <p className="text-amber-200 font-bold mb-2 flex items-center gap-2">
+            ⚠️ Important Note:
           </p>
-          <p className="text-sm text-emerald-300">
-            Share with fellow Sri Lankan tech enthusiasts
+          <p className="text-teal-100 text-sm leading-relaxed">
+            We will <span className="text-amber-300 font-bold">NOT</span> send the webinar links via email. 
+            All links and materials will be shared <span className="text-emerald-300 font-bold">ONLY</span> through our private WhatsApp group.
+            <br /><br />
+            <span className="text-emerald-400 font-semibold italic">Limited to the first 100 participants. Join now to secure your access!</span>
           </p>
         </div>
 
-        <a
-          href={`https://wa.me/?text=I%20just%20registered%20for%20the%20Free%20AI%20Webinar%20in%20Sri%20Lanka!%20Join%20me!%20Limited%20spots%20available!`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-bold py-3 px-6 rounded-lg text-sm uppercase tracking-wider transition-all hover:shadow-lg hover:shadow-green-500/50 mb-6"
-        >
-          <Sparkles className="w-4 h-4" />
-          Share on WhatsApp
-        </a>
+        <div className="flex flex-col gap-4 mb-8">
+          <a
+            href="https://chat.whatsapp.com/your-group-id" // Placeholder
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-5 px-8 rounded-2xl shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/30 to-emerald-400/0 -translate-x-full group-hover:animate-[shimmer_2s_infinite]"></div>
+            <Sparkles className="w-5 h-5 text-emerald-300 group-hover:rotate-12 transition-transform" />
+            <span className="text-lg uppercase tracking-wider">Join Official WhatsApp Group</span>
+          </a>
+
+          <a
+            href={`https://wa.me/?text=I%20just%20registered%20for%20the%20Free%20AI%20Webinar%20in%20Sri%20Lanka!%20Join%20me!%20Limited%20to%20100%20spots!`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 text-teal-300 hover:text-teal-200 text-xs font-semibold py-2 transition-colors"
+          >
+            <Sparkles className="w-3 h-3" />
+            Share with your tech circle
+          </a>
+        </div>
 
         <button
           onClick={onReset}
