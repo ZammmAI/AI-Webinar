@@ -1,20 +1,42 @@
 import { Sparkles, Calendar, Clock, Users, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { SeatCounter } from './registration/SeatCounter';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
 
 export function Hero() {
   return (
-    <div className="flex flex-col justify-center space-y-6">
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="flex flex-col justify-center space-y-6"
+    >
       {/* Event Badge */}
-      <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-4 py-2 w-fit">
+      <motion.div variants={item} className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-4 py-2 w-fit">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
         <span className="text-emerald-300 text-xs font-bold uppercase tracking-widest">Free Event · Limited Seats</span>
-      </div>
+      </motion.div>
 
       {/* Title */}
-      <div>
-        <p className="text-emerald-400/70 text-sm font-semibold uppercase tracking-widest mb-2">Sri Lanka's Premier</p>
+      <motion.div variants={item}>
+        <p className="text-emerald-400/70 text-sm font-semibold uppercase tracking-widest mb-2 text-left">Sri Lanka's Premier</p>
         <h1 className="text-5xl font-black leading-tight mb-1">
           <span className="gradient-text">AI FREE</span>
           <br />
@@ -24,10 +46,10 @@ export function Hero() {
         <p className="text-teal-100/60 text-base font-light mt-3 leading-relaxed">
           A live session to explore what AI really means for your career — and what you can start doing about it today.
         </p>
-      </div>
+      </motion.div>
 
       {/* Event Details */}
-      <div className="bg-slate-800/50 border border-emerald-500/20 rounded-2xl p-5 space-y-3 backdrop-blur-sm">
+      <motion.div variants={item} className="bg-slate-800/50 border border-emerald-500/20 rounded-2xl p-5 space-y-3 backdrop-blur-sm shadow-xl">
         <div className="flex items-center gap-3">
           <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
             <Calendar className="w-4 h-4 text-emerald-400" />
@@ -56,24 +78,27 @@ export function Hero() {
             <p className="text-emerald-400/60 text-[10px] mt-0.5">Link shared via WhatsApp group only</p>
           </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Seat Counter - Integrated Social Proof */}
+      <SeatCounter />
 
       {/* What You'll Learn */}
-      <div className="space-y-3">
+      <motion.div variants={item} className="space-y-3 pt-2">
         {[
           { icon: Zap, text: "How AI is changing tech careers right now" },
           { icon: Sparkles, text: "Real tools to use from day one — no fluff" },
           { icon: Sparkles, text: "Live Q&A with the AOB team" },
-        ].map((item, i) => (
-          <div key={i} className="flex items-start gap-3">
-            <item.icon className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-            <p className="text-teal-100/80 text-sm">{item.text}</p>
+        ].map((item_val, i) => (
+          <div key={i} className="flex items-start gap-3 group">
+            <item_val.icon className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+            <p className="text-teal-100/80 text-sm">{item_val.text}</p>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Powered by AOB */}
-      <div className="pt-5 border-t border-white/10">
+      <motion.div variants={item} className="pt-5 border-t border-white/10">
         <p className="text-white/25 text-[8px] uppercase tracking-[0.4em] font-bold mb-3 text-center">Powered by</p>
         <div className="flex flex-col items-center gap-3 bg-black/20 border border-white/5 rounded-xl px-4 py-4 backdrop-blur-sm">
           <img
@@ -102,7 +127,7 @@ export function Hero() {
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
