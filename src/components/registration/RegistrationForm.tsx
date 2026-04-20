@@ -128,7 +128,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
+          <label className="block text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-2 font-inter">
             Full Name
           </label>
           <input
@@ -147,7 +147,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
+          <label className="block text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-2 font-inter">
             Email Address
           </label>
           <input
@@ -168,7 +168,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
+            <label className="block text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-2 font-inter">
               Age
             </label>
             <input
@@ -187,7 +187,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
+            <label className="block text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-2 font-inter">
               Phone (LK)
             </label>
             <div className="relative group">
@@ -235,11 +235,11 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 >
                   <Icon className={cn(
                     "w-5 h-5 transition-transform group-hover:scale-110",
-                    isActive ? "text-emerald-400" : "text-teal-100/50"
+                    isActive ? "text-emerald-400" : "text-teal-100/80"
                   )} />
                   <span className={cn(
                     "text-[10px] font-bold uppercase tracking-tighter",
-                    isActive ? "text-emerald-300" : "text-teal-100/30"
+                    isActive ? "text-emerald-300" : "text-teal-100/90"
                   )}>
                     {role.label}
                   </span>
