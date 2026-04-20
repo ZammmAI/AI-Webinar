@@ -49,18 +49,22 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const onSubmit = async (data: RegistrationFormData) => {
     setIsSubmitting(true);
+    console.log('Submitting enrollment data:', data);
     try {
       const { error } = await supabase
         .from('webinar_registrations')
         .insert([data]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase insertion error:', error);
+        throw error;
+      }
 
       toast.success('Registration successful! Welcome aboard.');
       onSuccess(data);
     } catch (error: any) {
       console.error('Error submitting form:', error);
-      toast.error(error.message || 'Error submitting form. Please try again.');
+      toast.error(`Submission failed: ${error.message || 'Unknown error'}`);
     } finally {
       setIsSubmitting(false);
     }
