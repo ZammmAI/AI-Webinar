@@ -53,10 +53,9 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   useEffect(() => {
     async function fetchCount() {
-      const { count } = await supabase
-        .from('webinar_registrations')
-        .select('*', { count: 'exact', head: true });
-      if (count !== null) setRegistrationCount(count);
+      const { data: dbCount } = await supabase
+        .rpc('get_registration_count');
+      if (dbCount !== null) setRegistrationCount(Number(dbCount));
     }
 
     fetchCount();

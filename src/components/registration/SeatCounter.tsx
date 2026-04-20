@@ -11,9 +11,8 @@ export function SeatCounter() {
   useEffect(() => {
     async function fetchCount() {
       try {
-        const { count: dbCount, error } = await supabase
-          .from('webinar_registrations')
-          .select('*', { count: 'exact', head: true });
+        const { data: dbCount, error } = await supabase
+          .rpc('get_registration_count');
 
         if (error) {
           console.error('Supabase fetch error:', error);
