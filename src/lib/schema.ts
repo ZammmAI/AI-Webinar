@@ -5,11 +5,14 @@ export const registrationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   age: z.string().refine((val) => {
     const age = parseInt(val, 10);
-    return !isNaN(age) && age >= 18;
+    return !isNaN(age) && age >= 1 && age <= 120;
   }, {
-    message: "You must be at least 18 years old",
+    message: "Please enter a valid age",
   }),
-  phone: z.string().min(10, "Phone number must be at least 10 digits").regex(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, "Invalid phone format"),
+  phone: z.string()
+    .min(9, "Too short (min 9 digits)")
+    .max(10, "Too long (max 10 digits)")
+    .regex(/^[0-9]+$/, "Numeric digits only"),
   role: z.enum(["developer", "designer", "entrepreneur", "student", "manager", "other"]),
 });
 

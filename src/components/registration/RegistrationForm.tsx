@@ -8,17 +8,17 @@ import {
   Lightbulb, 
   GraduationCap, 
   Briefcase, 
-  User 
+  User
 } from 'lucide-react';
 import { registrationSchema, RegistrationFormData } from '../../lib/schema';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
 import { cn } from '../../lib/utils';
 import { motion } from 'framer-motion';
 
 interface RegistrationFormProps {
-  onSuccess: (data: RegistrationFormData) => void;
+  onSuccess: (data: RegistrationFormData & { isWaitlist?: boolean }) => void;
 }
 
 const ROLES = [
@@ -32,6 +32,7 @@ const ROLES = [
 
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registrationCount, setRegistrationCount] = useState<number>(0);
 
   const {
     register,
@@ -41,33 +42,67 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     formState: { errors },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
+    mode: 'onTouched',
     defaultValues: {
       role: 'developer',
     }
   });
 
   const selectedRole = watch('role');
+  const isWaitlist = registrationCount >= 100;
+
+  useEffect(() => {
+    async function fetchCount() {
+      const { count } = await supabase
+        .from('webinar_registrations')
+        .select('*', { count: 'exact', head: true });
+      if (count !== null) setRegistrationCount(count);
+    }
+
+    fetchCount();
+
+    const channel = supabase
+      .channel('form-count-sync')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'webinar_registrations' }, () => {
+        setRegistrationCount(prev => prev + 1);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   const onSubmit = async (data: RegistrationFormData) => {
     setIsSubmitting(true);
-    console.log('Submitting enrollment data:', data);
+    
+    // Auto-prepend +94 prefix and remove leading zero if present
+    const formattedData = {
+      ...data,
+      phone: data.phone.startsWith('+94') ? data.phone : `+94${data.phone.replace(/^0/, '')}`
+    };
+
+    console.log('Submitting enrollment data:', formattedData);
     try {
       const { error } = await supabase
         .from('webinar_registrations')
-        .insert([data]);
+        .insert([{
+          ...formattedData,
+          status: isWaitlist ? 'waitlist' : 'confirmed'
+        }]);
 
       if (error) {
         console.error('Supabase insertion error:', error);
         throw error;
       }
 
-      toast.success('Registration successful! Welcome aboard.');
-      onSuccess(data);
+      // Snappy success transition
+      onSuccess({ ...data, isWaitlist });
+      toast.success(isWaitlist ? 'Added to waitlist!' : 'Registration successful! Welcome aboard.');
     } catch (error: any) {
       console.error('Error submitting form:', error);
       toast.error(`Submission failed: ${error.message || 'Unknown error'}`);
-    } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // Only reset if failed so the user can try again
     }
   };
 
@@ -76,9 +111,16 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 shadow-2xl pulse-glow"
+      className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-emerald-500/30 rounded-2xl p-8 shadow-2xl relative overflow-hidden"
     >
-      <h2 className="text-2xl font-black gradient-text mb-6">Secure Your Spot</h2>
+      <h2 className="text-2xl font-black text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+        {isWaitlist ? 'Join the Waitlist' : 'Secure Your Spot'}
+      </h2>
+      <p className="text-teal-100/50 text-xs mb-6 font-medium">
+        {isWaitlist 
+          ? "We've reached our 100 seat capacity. Join the waitlist for priority access to the next session!" 
+          : "Join Sri Lanka's most exclusive AI session. Only 100 spots available."}
+      </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <motion.div
@@ -86,13 +128,13 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
            animate={{ opacity: 1, y: 0 }}
            transition={{ delay: 0.4 }}
         >
-          <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
+          <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
             Full Name
           </label>
           <input
             {...register('name')}
             className={cn(
-              "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+              "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
               errors.name && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="Amal Silva"
@@ -105,14 +147,14 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
            animate={{ opacity: 1, y: 0 }}
            transition={{ delay: 0.5 }}
         >
-          <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
+          <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
             Email Address
           </label>
           <input
             {...register('email')}
             type="email"
             className={cn(
-              "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+              "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
               errors.email && "border-red-500/50 focus:ring-red-500/10"
             )}
             placeholder="amal@colombo.tech"
@@ -126,14 +168,14 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.6 }}
           >
-            <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
+            <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
               Age
             </label>
             <input
               {...register('age')}
               type="number"
               className={cn(
-                "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
+                "w-full bg-slate-800/80 border border-emerald-500/20 text-white px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
                 errors.age && "border-red-500/50 focus:ring-red-500/10"
               )}
               placeholder="28"
@@ -145,18 +187,24 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.6 }}
           >
-            <label className="block text-teal-100 text-xs font-bold uppercase tracking-widest mb-2 opacity-70">
+            <label className="block text-teal-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 opacity-50 font-inter">
               Phone (LK)
             </label>
-            <input
-              {...register('phone')}
-              type="tel"
-              className={cn(
-                "w-full bg-slate-700/30 border border-emerald-500/20 text-teal-50 px-4 py-3 rounded-xl text-sm placeholder-teal-400/30 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all backdrop-blur-sm",
-                errors.phone && "border-red-500/50 focus:ring-red-500/10"
-              )}
-              placeholder="+94 701 234567"
-            />
+            <div className="relative group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none">
+                <span className="text-emerald-400 font-bold text-sm tracking-tight">+94</span>
+                <div className="w-[1px] h-4 bg-emerald-500/30" />
+              </div>
+              <input
+                {...register('phone')}
+                type="tel"
+                className={cn(
+                  "w-full bg-slate-800/80 border border-emerald-500/20 text-white pl-16 pr-4 py-3 rounded-xl text-sm placeholder-teal-400/30 font-outfit font-medium tracking-tight focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all",
+                  errors.phone && "border-red-500/50 focus:ring-red-500/10"
+                )}
+                placeholder="701 234567"
+              />
+            </div>
             {errors.phone && <p className="text-red-400 text-[10px] mt-1 font-bold uppercase tracking-tighter">{errors.phone.message}</p>}
           </motion.div>
         </div>
@@ -213,7 +261,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isSubmitting}
-          className="group w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50 text-slate-900 font-black py-4 px-4 rounded-xl text-xs uppercase tracking-[0.2em] transition-all hover:shadow-2xl hover:shadow-emerald-500/40 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
+          className={cn(
+            "group w-full font-black py-4 px-4 rounded-xl text-xs uppercase tracking-[0.2em] transition-all hover:shadow-2xl flex items-center justify-center gap-2 disabled:cursor-not-allowed",
+            isWaitlist 
+              ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 hover:shadow-amber-500/40 text-slate-900 shadow-xl" 
+              : "bg-blue-800 hover:bg-blue-700 hover:shadow-blue-500/40 text-white shadow-xl"
+          )}
         >
           {isSubmitting ? (
             <>
@@ -222,7 +275,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             </>
           ) : (
             <>
-              Secure Seat Now
+              {isWaitlist ? 'Join The Waitlist' : 'Secure Seat Now'}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </>
           )}

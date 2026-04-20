@@ -120,7 +120,7 @@ export function Hero() {
               BILLIONAIRES
             </p>
             <p
-              className="text-amber-400/50 text-[8px] tracking-[0.3em] font-medium mt-1.5 leading-none"
+              className="text-white/70 text-[8px] tracking-[0.3em] font-bold mt-1.5 leading-none"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
               EDUCATE · ELEVATE · DOMINATE
