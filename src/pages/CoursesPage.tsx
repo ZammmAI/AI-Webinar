@@ -11,7 +11,7 @@ const COURSES = [
     description: 'Understand, use, and build with AI, without the confusion.',
     image: '/ai.jpg',
     price: '40,000 RS',
-    category: 'AI',
+    category: 'AI Path',
   },
   {
     id: 'creator-path',
@@ -19,7 +19,7 @@ const COURSES = [
     description: 'Turn ideas into content and systems that grow audiences.',
     image: '/creator.jpg',
     price: '40,000 RS',
-    category: 'Creator',
+    category: 'Creator Path',
   },
   {
     id: 'youth-path',
@@ -27,7 +27,7 @@ const COURSES = [
     description: 'Learn digital skills through building, creating, and play.',
     image: '/youth.jpg',
     price: '40,000 RS',
-    category: 'Youth',
+    category: 'Youth Path',
   },
   {
     id: 'marketing-path',
@@ -35,11 +35,11 @@ const COURSES = [
     description: 'Learn digital Marketing skills through AI.',
     image: '/Marketing.png',
     price: '40,000 RS',
-    category: 'Digital Marketing',
+    category: 'Digital Marketing Path',
   },
 ];
 
-const CATEGORIES = ['All', 'AI', 'Creator', 'Youth', 'Digital Marketing'];
+const CATEGORIES = ['All', 'AI Path', 'Creator Path', 'Youth Path', 'Digital Marketing Path'];
 
 export function CoursesPage() {
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export function CoursesPage() {
       : COURSES.filter((c) => c.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#020617] relative overflow-hidden pt-32 pb-20 px-4">
+    <div className="min-h-screen bg-[#020617] relative overflow-hidden pt-24 pb-12 px-4">
       <SEO
         title="AI Courses | Master the Knowledge Paths"
         description="Choose from our 4 exclusive AI knowledge paths: The AI Path, The Creator Path, The Youth Path, and The Marketing Path."
@@ -74,13 +74,13 @@ export function CoursesPage() {
         className="fixed bottom-6 right-6 w-28 h-28 md:w-40 md:h-40 opacity-90 pointer-events-none z-50 drop-shadow-[0_0_30px_rgba(16,185,129,0.35)]"
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[1440px] w-full mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="text-emerald-500 font-bold tracking-[0.2em] uppercase mb-4 text-sm">
             Knowledge Paths
@@ -104,7 +104,7 @@ export function CoursesPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          className="flex flex-wrap justify-center gap-3 mb-10"
         >
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat;
@@ -151,6 +151,55 @@ export function CoursesPage() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Powered By */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-16 pb-4 flex flex-col items-center gap-12"
+        >
+          {/* Divider with label */}
+          <div className="flex items-center gap-6 w-full max-w-xl">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-white/25" />
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50" style={{ fontFamily: 'Cinzel, serif' }}>
+              Powered By
+            </span>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent via-white/20 to-white/25" />
+          </div>
+
+          {/* Logos row — both sides vertically centred */}
+          <div className="flex items-center justify-center gap-14 sm:gap-20">
+
+            {/* AOB — text only, centred */}
+            <div className="flex flex-col items-center text-center gap-1.5">
+              <p className="text-[10px] tracking-[0.4em] uppercase text-amber-400/80 leading-none" style={{ fontFamily: 'Cinzel, serif' }}>
+                Academy of
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold tracking-[0.25em] uppercase leading-none text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 drop-shadow-[0_0_24px_rgba(251,191,36,0.25)]" style={{ fontFamily: 'Cinzel, serif' }}>
+                Billionaires
+              </p>
+              <p className="text-[9px] tracking-[0.3em] uppercase text-amber-400/60 mt-0.5" style={{ fontFamily: 'Cinzel, serif' }}>
+                Educate · Elevate · Dominate
+              </p>
+            </div>
+
+            {/* Vertical divider */}
+            <div className="self-stretch w-px bg-white/15 my-1" />
+
+            {/* Nuaiy — natural blue, vertically centred */}
+            <div className="flex items-center">
+              <img
+                src="/nuaiy.png"
+                alt="Nuaiy"
+                className="h-14 w-auto object-contain"
+              />
+            </div>
+
+          </div>
+
+        </motion.div>
+
       </div>
 
       {/* Course Modal */}
@@ -165,3 +214,4 @@ export function CoursesPage() {
     </div>
   );
 }
+
