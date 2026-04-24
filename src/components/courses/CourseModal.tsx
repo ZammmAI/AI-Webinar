@@ -73,12 +73,12 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
 
       // 3. Trigger Edge Function (for Google Sheets & Resend)
       const { error: funcError } = await supabase.functions.invoke('register-course', {
-        body: { 
-          ...data, 
-          courseId: course.id, 
+        body: {
+          ...data,
+          courseId: course.id,
           courseTitle: course.title,
           coursePrice: course.price,
-          receiptUrl: publicUrl 
+          receiptUrl: publicUrl
         },
       });
 
@@ -116,7 +116,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
         onClick={onClose}
         className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
       />
-      
+
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -129,7 +129,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
             <h2 className="text-emerald-500 font-bold tracking-widest text-xs uppercase mb-2">Registration</h2>
             <h3 className="text-2xl font-bold text-white">{course.title}</h3>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 hover:bg-white/5 rounded-full text-slate-400 transition-colors"
           >
@@ -157,23 +157,19 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                       <p className="text-white font-medium">Please pay {course.price}</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3 text-slate-300">
                     <div className="flex justify-between py-2 border-b border-white/5">
                       <span>Bank</span>
-                      <span className="text-white font-semibold">BOC</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b border-white/5">
-                      <span>Branch</span>
-                      <span className="text-white font-semibold">MAHARAGAMA</span>
+                      <span className="text-white font-semibold">Commercial Bank</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-white/5">
                       <span>Account Name</span>
-                      <span className="text-white font-semibold">W M B S DISSANAYAKE</span>
+                      <span className="text-white font-semibold">THE AOB (PVT) LTD</span>
                     </div>
                     <div className="flex justify-between py-2">
                       <span>Account Number</span>
-                      <span className="text-white font-semibold">86861968</span>
+                      <span className="text-white font-semibold">8012345678</span>
                     </div>
                   </div>
                 </div>
@@ -291,12 +287,12 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                           {uploadedFile ? uploadedFile.name : 'Click to upload or drag and drop'}
                         </p>
                       </div>
-                      <input 
-                        type="file" 
-                        className="hidden" 
+                      <input
+                        type="file"
+                        className="hidden"
                         {...register('receipt', {
                           onChange: (e) => setUploadedFile(e.target.files[0])
-                        })} 
+                        })}
                       />
                     </label>
                     {errors.receipt && <p className="text-red-500 text-xs mt-1 ml-1">{errors.receipt.message as string}</p>}
@@ -324,7 +320,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                 <div className="bg-red-500/10 border border-red-500/40 rounded-[2rem] p-8 relative overflow-hidden">
                   {/* Decorative Background for Red Confirmation */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-3xl rounded-full" />
-                  
+
                   <div className="flex items-center gap-3 mb-6">
                     <AlertCircle className="w-6 h-6 text-red-500" />
                     <h4 className="text-xl font-bold text-red-500 uppercase tracking-tight">Confirm Your Details</h4>

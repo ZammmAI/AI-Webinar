@@ -64,15 +64,22 @@ export function CoursesPage() {
         <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px]" />
       </div>
 
-      {/* 3D Robot — fixed bottom-right */}
-      <motion.img
-        src="/AI_Robot_3d.png"
-        alt="AI Robot"
+      {/* 3D Robot & Mentor Label — fixed bottom-right */}
+      <motion.div
         initial={{ y: 0 }}
         animate={{ y: [-14, 14, -14] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="fixed bottom-6 right-6 w-28 h-28 md:w-40 md:h-40 opacity-90 pointer-events-none z-50 drop-shadow-[0_0_30px_rgba(16,185,129,0.35)]"
-      />
+        className="fixed bottom-6 right-6 z-50 pointer-events-none flex flex-col items-center gap-1"
+      >
+        <div className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-black/50">
+          AI Mentor
+        </div>
+        <img
+          src="/AI_Robot_3d.png"
+          alt="AI Robot"
+          className="w-28 h-28 md:w-40 md:h-40 opacity-90 drop-shadow-[0_0_30px_rgba(16,185,129,0.35)]"
+        />
+      </motion.div>
 
       <div className="max-w-[1440px] w-full mx-auto relative z-10">
         {/* Header */}
