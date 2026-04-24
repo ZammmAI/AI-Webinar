@@ -176,33 +176,39 @@ export function CoursesPage() {
           </div>
 
           {/* Logos row — both sides vertically centred */}
-          <div className="flex items-center justify-center gap-14 sm:gap-20">
+          <div className="flex items-center justify-center gap-8 sm:gap-20">
 
-            {/* AOB — text only, centred */}
-            <div className="flex flex-col items-center text-center gap-1.5">
-              <p className="text-[10px] tracking-[0.4em] uppercase text-amber-400/80 leading-none" style={{ fontFamily: 'Cinzel, serif' }}>
-                Academy of
-              </p>
-              <p className="text-2xl sm:text-3xl font-bold tracking-[0.25em] uppercase leading-none text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 drop-shadow-[0_0_24px_rgba(251,191,36,0.25)]" style={{ fontFamily: 'Cinzel, serif' }}>
-                Billionaires
-              </p>
-              <p className="text-[9px] tracking-[0.3em] uppercase text-amber-400/60 mt-0.5" style={{ fontFamily: 'Cinzel, serif' }}>
-                Educate · Elevate · Dominate
-              </p>
+            {/* AOB — Logo + Text */}
+            <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
+              <img 
+                src="/aob-logo.png" 
+                alt="Academy of Billionaires" 
+                className="h-10 sm:h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]"
+              />
+              <div className="flex flex-col items-center gap-1">
+                <p className="text-[7px] sm:text-[9px] tracking-[0.4em] uppercase text-amber-400/80 leading-none" style={{ fontFamily: 'Cinzel, serif' }}>
+                  Academy of
+                </p>
+                <p className="text-lg sm:text-2xl font-bold tracking-[0.2em] uppercase leading-none text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400" style={{ fontFamily: 'Cinzel, serif' }}>
+                  Billionaires
+                </p>
+                <p className="text-[6px] sm:text-[8px] tracking-[0.3em] uppercase text-amber-400/60 mt-1" style={{ fontFamily: 'Cinzel, serif' }}>
+                  Educate · Elevate · Dominate
+                </p>
+              </div>
             </div>
 
             {/* Vertical divider */}
-            <div className="self-stretch w-px bg-white/15 my-1" />
+            <div className="h-16 sm:h-24 w-px bg-white/10" />
 
-            {/* Nuaiy — natural blue, vertically centred */}
-            <div className="flex items-center">
+            {/* Nuaiy — Logo Only */}
+            <div className="flex flex-col items-center">
               <img
                 src="/nuaiy.png"
                 alt="Nuaiy"
-                className="h-14 w-auto object-contain"
+                className="h-10 sm:h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.2)]"
               />
             </div>
-
           </div>
 
         </motion.div>
