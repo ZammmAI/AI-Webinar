@@ -77,6 +77,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
           ...data, 
           courseId: course.id, 
           courseTitle: course.title,
+          coursePrice: course.price,
           receiptUrl: publicUrl 
         },
       });
