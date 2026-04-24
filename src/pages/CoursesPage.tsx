@@ -51,7 +51,7 @@ export function CoursesPage() {
       : COURSES.filter((c) => c.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#020617] relative overflow-hidden pt-24 pb-12 px-4">
+    <div className="min-h-screen bg-[#020617] relative overflow-hidden pt-20 md:pt-28 pb-12 px-4">
       <SEO
         title="AI Courses | Master the Knowledge Paths"
         description="Choose from our 4 exclusive AI knowledge paths: The AI Path, The Creator Path, The Youth Path, and The Marketing Path."
@@ -87,7 +87,7 @@ export function CoursesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-center mb-10"
+          className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-emerald-500 font-bold tracking-[0.2em] uppercase mb-4 text-sm">
             Knowledge Paths
@@ -111,7 +111,7 @@ export function CoursesPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-10"
+          className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12"
         >
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat;
@@ -119,7 +119,7 @@ export function CoursesPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 focus:outline-none ${
+                className={`relative px-4 md:px-6 py-2 rounded-full text-[12px] md:text-sm font-semibold transition-all duration-300 focus:outline-none ${
                   isActive
                     ? 'text-white shadow-lg shadow-emerald-500/30'
                     : 'text-slate-400 hover:text-white bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10'
@@ -141,7 +141,7 @@ export function CoursesPage() {
         {/* Course Grid */}
         <motion.div
           layout
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course) => (
