@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Users } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../lib/utils';
+
 
 export function SeatCounter() {
   const [count, setCount] = useState<number | null>(null);
@@ -50,7 +50,7 @@ export function SeatCounter() {
     };
   }, []);
 
-  const seatsLeft = count !== null ? Math.max(0, TOTAL_SEATS - count) : null;
+
 
   return (
     <motion.div 

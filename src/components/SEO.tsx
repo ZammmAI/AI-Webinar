@@ -12,8 +12,8 @@ export function SEO({
   title = "AI Webinar 2026 | Transform Your Future with AI",
   description = "Join our exclusive AI Webinar to master cutting-edge technology. Expert trainers, live sessions, and exclusive resources for the Sri Lankan tech community.",
   keywords = "AI, Artificial Intelligence, Webinar, Sri Lanka, Tech, Developer, Future",
-  image = "https://ai-webinar-lk.vercel.app/og-image.jpg", // Default placeholder
-  url = "https://ai-webinar-lk.vercel.app",
+  image = "https://ai.theaob.lk/og-image.jpg",
+  url = "https://ai.theaob.lk",
 }: SEOProps) {
   const siteTitle = `${title}`;
 
