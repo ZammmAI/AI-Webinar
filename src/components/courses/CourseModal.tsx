@@ -161,15 +161,19 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                   <div className="space-y-3 text-slate-300">
                     <div className="flex justify-between py-2 border-b border-white/5">
                       <span>Bank</span>
-                      <span className="text-white font-semibold">Commercial Bank</span>
+                      <span className="text-white font-semibold">BOC</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-white/5">
+                      <span>Branch</span>
+                      <span className="text-white font-semibold">MAHARAGAMA</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-white/5">
                       <span>Account Name</span>
-                      <span className="text-white font-semibold">THE AOB (PVT) LTD</span>
+                      <span className="text-white font-semibold">W M B S DISSANAYAKE</span>
                     </div>
                     <div className="flex justify-between py-2">
                       <span>Account Number</span>
-                      <span className="text-white font-semibold">8012345678</span>
+                      <span className="text-white font-semibold">86861968</span>
                     </div>
                   </div>
                 </div>

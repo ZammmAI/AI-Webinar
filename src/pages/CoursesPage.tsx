@@ -10,7 +10,7 @@ const COURSES = [
     title: 'THE AI PATH',
     description: 'Understand, use, and build with AI, without the confusion.',
     image: '/ai.jpg',
-    price: '40,000 RS',
+    price: 'Rs. 40,000',
     category: 'AI Path',
   },
   {
@@ -18,7 +18,7 @@ const COURSES = [
     title: 'THE CREATOR PATH',
     description: 'Turn ideas into content and systems that grow audiences.',
     image: '/creator.jpg',
-    price: '40,000 RS',
+    price: 'Rs. 40,000',
     category: 'Creator Path',
   },
   {
@@ -26,7 +26,7 @@ const COURSES = [
     title: 'THE YOUTH PATH',
     description: 'Learn digital skills through building, creating, and play.',
     image: '/youth.jpg',
-    price: '40,000 RS',
+    price: 'Rs. 40,000',
     category: 'Youth Path',
   },
   {
@@ -34,7 +34,7 @@ const COURSES = [
     title: 'THE MARKETING PATH',
     description: 'Learn digital Marketing skills through AI.',
     image: '/Marketing.png',
-    price: '40,000 RS',
+    price: 'Rs. 40,000',
     category: 'Digital Marketing Path',
   },
 ];
