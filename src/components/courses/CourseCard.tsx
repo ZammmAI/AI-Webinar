@@ -19,7 +19,7 @@ export function CourseCard({ id, title, description, image, price, category, onE
       className="group relative flex flex-col h-full bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden hover:border-emerald-500/60 transition-colors duration-500 shadow-xl shadow-black/40 hover:shadow-emerald-500/10"
     >
       {/* Thumbnail */}
-      <div className="relative aspect-video sm:aspect-[5/4] overflow-hidden shrink-0">
+      <div className="relative aspect-video overflow-hidden shrink-0">
         <img
           src={image}
           alt={title}
@@ -40,13 +40,9 @@ export function CourseCard({ id, title, description, image, price, category, onE
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5 sm:p-8 gap-3 sm:gap-4">
-        {/* Title with left accent */}
-        <div className="flex items-start gap-3">
-          <div className="w-1.5 h-8 rounded-full bg-gradient-to-b from-emerald-400 to-teal-600 flex-shrink-0 mt-0.5 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
-          <h3 className="text-lg sm:text-2xl font-black text-white leading-tight group-hover:text-emerald-300 transition-colors duration-300 tracking-wide">
-            {title}
-          </h3>
-        </div>
+        <h3 className="text-lg sm:text-2xl font-black text-white leading-tight group-hover:text-emerald-300 transition-colors duration-300 tracking-wide">
+          {title}
+        </h3>
 
         <p className="text-slate-400 text-sm sm:text-base leading-relaxed flex-1">
           {description}

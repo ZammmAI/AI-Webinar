@@ -81,7 +81,7 @@ export function CoursesPage() {
         />
       </motion.div>
 
-      <div className="max-w-[1440px] w-full mx-auto relative z-10">
+      <div className="max-w-[1600px] w-full mx-auto relative z-10 px-4 sm:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -141,7 +141,7 @@ export function CoursesPage() {
         {/* Course Grid */}
         <motion.div
           layout
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course) => (
@@ -166,14 +166,10 @@ export function CoursesPage() {
           transition={{ delay: 0.4 }}
           className="mt-16 pb-4 flex flex-col items-center gap-12"
         >
-          {/* Divider with label */}
-          <div className="flex items-center gap-6 w-full max-w-xl">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-white/25" />
-            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50" style={{ fontFamily: 'Cinzel, serif' }}>
-              Powered By
-            </span>
-            <div className="flex-1 h-px bg-gradient-to-l from-transparent via-white/20 to-white/25" />
-          </div>
+          {/* Label */}
+          <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50" style={{ fontFamily: 'Cinzel, serif' }}>
+            Powered By
+          </span>
 
           {/* Logos row — both sides vertically centred */}
           <div className="flex items-center justify-center gap-8 sm:gap-20">
@@ -197,9 +193,6 @@ export function CoursesPage() {
                 </p>
               </div>
             </div>
-
-            {/* Vertical divider */}
-            <div className="h-16 sm:h-24 w-px bg-white/10" />
 
             {/* Nuaiy — Logo Only */}
             <div className="flex flex-col items-center">

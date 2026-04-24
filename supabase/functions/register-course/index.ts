@@ -46,7 +46,7 @@ Deno.serve(async (req: Request) => {
                     <td style="padding: 4px 0; color: #fff;">${fullName}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 4px 0; color: #94a3b8;"><strong>Amount Paid:</strong></td>
+                    <td style="padding: 4px 0; color: #94a3b8;"><strong>Amount:</strong></td>
                     <td style="padding: 4px 0; color: #fff;">${coursePrice || 'N/A'}</td>
                   </tr>
                   <tr>
@@ -56,7 +56,7 @@ Deno.serve(async (req: Request) => {
                 </table>
               </div>
             </div>
-            <p style="font-size: 14px; color: #64748b;">Our team will verify your payment and NIC details. You will receive the Zoom links and course materials via email and WhatsApp once verified.</p>
+            <p style="font-size: 14px; color: #64748b;">Our team will verify your payment and reach to you through WhatsApp once verified.</p>
             <hr style="border: 0; border-top: 1px solid #334155; margin: 30px 0;" />
             <p style="font-size: 12px; color: #475569; text-align: center;">&copy; 2026 Academy of Billionaires. All rights reserved.</p>
           </div>
