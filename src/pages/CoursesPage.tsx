@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CourseCard } from '../components/courses/CourseCard';
 import { SEO } from '../components/SEO';
 import { CourseModal } from '../components/courses/CourseModal';
@@ -10,6 +10,7 @@ const COURSES = [
     title: 'THE AI PATH',
     description: 'Understand, use, and build with AI, without the confusion.',
     image: '/ai.jpg',
+    originalPrice: 'Rs. 55,000',
     price: 'Rs. 40,000',
     category: 'AI Path',
   },
@@ -18,6 +19,7 @@ const COURSES = [
     title: 'THE CREATOR PATH',
     description: 'Turn ideas into content and systems that grow audiences.',
     image: '/creator.jpg',
+    originalPrice: 'Rs. 55,000',
     price: 'Rs. 40,000',
     category: 'Creator Path',
   },
@@ -26,6 +28,7 @@ const COURSES = [
     title: 'THE YOUTH PATH',
     description: 'Learn digital skills through building, creating, and play.',
     image: '/youth.jpg',
+    originalPrice: 'Rs. 55,000',
     price: 'Rs. 40,000',
     category: 'Youth Path',
   },
@@ -34,6 +37,7 @@ const COURSES = [
     title: 'THE MARKETING PATH',
     description: 'Learn digital Marketing skills through AI.',
     image: '/Marketing.png',
+    originalPrice: 'Rs. 55,000',
     price: 'Rs. 40,000',
     category: 'Digital Marketing Path',
   },
@@ -42,6 +46,7 @@ const COURSES = [
 const CATEGORIES = ['All', 'AI Path', 'Creator Path', 'Youth Path', 'Digital Marketing Path'];
 
 export function CoursesPage() {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -129,7 +134,11 @@ export function CoursesPage() {
                   <motion.span
                     layoutId="pill-active"
                     className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 -z-10"
-                    transition={{ type: 'spring', duration: 0.4 }}
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0 }
+                        : { type: 'spring', stiffness: 520, damping: 38, mass: 0.7 }
+                    }
                   />
                 )}
                 {cat}
@@ -144,14 +153,31 @@ export function CoursesPage() {
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredCourses.map((course) => (
+            {filteredCourses.map((course, index) => (
               <motion.div
                 key={course.id}
                 layout
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.92 }}
-                transition={{ duration: 0.3 }}
+                initial={
+                  prefersReducedMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: 14, scale: 0.96 }
+                }
+                animate={
+                  prefersReducedMotion
+                    ? { opacity: 1 }
+                    : { opacity: 1, y: 0, scale: 1 }
+                }
+                exit={
+                  prefersReducedMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: -8, scale: 0.98 }
+                }
+                transition={{
+                  layout: { type: 'spring', stiffness: 420, damping: 36, mass: 0.8 },
+                  opacity: { duration: 0.16, delay: prefersReducedMotion ? 0 : index * 0.02 },
+                  y: { duration: 0.18, delay: prefersReducedMotion ? 0 : index * 0.02 },
+                  scale: { duration: 0.18, delay: prefersReducedMotion ? 0 : index * 0.02 },
+                }}
               >
                 <CourseCard {...course} onEnroll={setSelectedCourseId} />
               </motion.div>
@@ -220,4 +246,3 @@ export function CoursesPage() {
     </div>
   );
 }
-
