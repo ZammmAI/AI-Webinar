@@ -8,7 +8,8 @@ import {
   Lightbulb,
   GraduationCap,
   Briefcase,
-  User
+  User,
+  CalendarDays
 } from 'lucide-react';
 import { registrationSchema, RegistrationFormData } from '../../lib/schema';
 import { useState, useEffect } from 'react';
@@ -30,6 +31,11 @@ const ROLES = [
   { id: 'other', label: 'Other', icon: User },
 ] as const;
 
+const SESSION_OPTIONS = [
+  { id: '2026-05-01', day: 'May 01', label: 'Friday', time: '7:30 PM - 8:30 PM' },
+  { id: '2026-05-02', day: 'May 02', label: 'Saturday', time: '7:30 PM - 8:30 PM' },
+] as const;
+
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [registrationCount, setRegistrationCount] = useState<number>(0);
@@ -44,10 +50,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     resolver: zodResolver(registrationSchema),
     mode: 'onTouched',
     defaultValues: {
+      session_date: '2026-05-01',
       role: 'developer',
     }
   });
 
+  const selectedSession = watch('session_date');
   const selectedRole = watch('role');
   const isWaitlist = registrationCount >= 100;
 
@@ -122,6 +130,48 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+        >
+          <label className="block text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-3 font-inter">
+            Choose Your Session
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            {SESSION_OPTIONS.map((session) => {
+              const isActive = selectedSession === session.id;
+              return (
+                <button
+                  key={session.id}
+                  type="button"
+                  onClick={() => setValue('session_date', session.id, { shouldValidate: true })}
+                  className={cn(
+                    "relative overflow-hidden rounded-xl border px-4 py-3 text-left transition-all duration-300",
+                    isActive
+                      ? "bg-emerald-500/20 border-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.25)]"
+                      : "bg-slate-800/70 border-emerald-500/15 hover:border-emerald-400/40 hover:bg-slate-700/40"
+                  )}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <CalendarDays className={cn("w-4 h-4", isActive ? "text-emerald-300" : "text-teal-100/60")} />
+                    <span className={cn("text-[10px] font-black uppercase tracking-widest", isActive ? "text-emerald-200" : "text-teal-100/70")}>
+                      {session.label}
+                    </span>
+                  </div>
+                  <p className="text-white font-black text-lg leading-none">{session.day}</p>
+                  <p className="text-emerald-300/70 text-[9px] uppercase tracking-widest font-bold mt-2">{session.time}</p>
+                  {isActive && (
+                    <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.7)]" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <input type="hidden" {...register('session_date')} />
+          {errors.session_date && <p className="text-red-400 text-[10px] mt-2 font-bold uppercase tracking-tighter">{errors.session_date.message}</p>}
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

@@ -23,6 +23,17 @@ export function HomePage() {
         <div className="absolute -bottom-32 left-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-[shimmer_3s_ease-in-out_infinite]"></div>
       </div>
 
+      <div className="pointer-events-none fixed bottom-5 right-5 z-20 hidden md:flex flex-col items-center gap-1 opacity-85 animate-[float_5s_ease-in-out_infinite]">
+        <div className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg">
+          AI Mentor
+        </div>
+        <img
+          src="/AI_Robot_3d.png"
+          alt="AI Robot"
+          className="w-28 lg:w-36 h-auto object-contain drop-shadow-[0_0_30px_rgba(16,185,129,0.35)]"
+        />
+      </div>
+
       <div className="relative z-10 w-full max-w-5xl">
         {!submittedData ? (
           <div className="grid md:grid-cols-2 gap-12 items-start">

@@ -56,7 +56,7 @@ export function Hero() {
           </div>
           <div>
             <p className="text-teal-100/50 text-[10px] uppercase tracking-widest font-bold">Date</p>
-            <p className="text-white font-semibold text-sm">Sunday, April 26th 2026</p>
+            <p className="text-white font-semibold text-sm">May 01/02, 2026</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export function Hero() {
           </div>
           <div>
             <p className="text-teal-100/50 text-[10px] uppercase tracking-widest font-bold">Time</p>
-            <p className="text-white font-semibold text-sm">8:00 PM Sri Lanka Time (IST)</p>
+            <p className="text-white font-semibold text-sm">7:30 PM - 8:30 PM Sri Lanka Time (IST)</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* Seat Counter - Integrated Social Proof */}
+      {/* Limited seats indicator */}
       <SeatCounter />
 
       {/* What You'll Learn */}

@@ -8,7 +8,7 @@ The **Academy of Billionaires (AOB) AI Webinar** site is a high-performance, exc
 ## 2. Technical Infrastructure
 *   **Framework**: [React 18](https://react.dev/) with [Vite](https://vitejs.dev/) (Lightning-fast HMR and production builds).
 *   **Language**: [TypeScript](https://www.typescript.org/) (Full type-safety for registration schemas and database interactions).
-*   **Backend & DB**: [Supabase](https://supabase.com/) (PostgreSQL with Realtime capabilities for live seat counting).
+*   **Backend & DB**: [Supabase](https://supabase.com/) (PostgreSQL with registration storage and seat-cap status logic).
 *   **Styling**: [Tailwind CSS](https://tailwindcss.com/) (Utility-first styling for high-performance UI components).
 *   **Animations**: [Framer Motion](https://www.framer.com/motion/) (Premium transitions, floating background elements, and state shifts).
 *   **Icons**: [Lucide React](https://lucide.dev/).
@@ -22,10 +22,10 @@ The site manages a "Hard Cap" of 100 seats but remains open for unlimited commun
 *   **Seats 101+**: Automatically tagged as **`waitlist`**. Users see a "Priority Waitlist" screen.
 *   **The Bridge**: Both confirmed and waitlisted users are invited to the unified **AOB WhatsApp Group**, ensuring 100% community retention regardless of Zoom capacity.
 
-### **3.2. Real-time Seat Counter**
-*   **Sync Logic**: Uses `supabase.channel()` to listen for `INSERT` events on the database.
-*   **Optimization**: The UI increments state locally rather than re-fetching the full count, providing sub-millisecond visual updates to all active visitors.
-*   **Urgency Hooks**: The counter stops at "0 Spots Left" when the 100-seat limit is reached, maintaining high pressure for new visitors to join the waitlist.
+### **3.2. Limited Seats Indicator**
+*   **Public Messaging**: The hero shows a static "Only Limited Seats" urgency indicator without exposing live slot numbers.
+*   **Status Logic**: The registration form still checks the current registration count to decide whether a new lead is `confirmed` or `waitlist`.
+*   **Urgency Hooks**: Scarcity is communicated through limited-seat copy while keeping the exact remaining count hidden from visitors.
 
 ### **3.3. Performance Engine**
 *   **Zero-Lag Submission**: The `onSubmit` flow is optimized to transition the UI to the success screen the microsecond Supabase confirms the entry.
@@ -60,6 +60,7 @@ The site manages a "Hard Cap" of 100 seats but remains open for unlimited commun
 | `email` | TEXT | Validated email address. |
 | `phone` | TEXT | Formatted with `+94` prefix. |
 | `age` | TEXT | Relaxed range (1–120). |
+| `session_date` | TEXT | Selected webinar date (`2026-05-01` or `2026-05-02`). |
 | `role` | TEXT | Journey identifier (e.g., student, founder). |
 | `status` | TEXT | `confirmed` or `waitlist`. |
 | `created_at` | TIMESTAMPTZ | Auto-generated timestamp for sorting. |
