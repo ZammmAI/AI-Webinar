@@ -10,6 +10,7 @@ interface ConfirmationProps {
 
 export function Confirmation({ data, onReset }: ConfirmationProps) {
   const isWaitlist = data.isWaitlist;
+  const whatsappLink = import.meta.env.VITE_WHATSAPP_LINK || "https://chat.whatsapp.com/FYBK04REv9Y8njdIcRGUpZ";
 
   return (
     <motion.div 
@@ -102,7 +103,7 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
 
         <div className="flex flex-col gap-4 mb-8">
           <a
-            href={import.meta.env.VITE_WHATSAPP_LINK || "https://chat.whatsapp.com/LwJFKWYTY3e8ZtB02huyjU?mode=gi_t"}
+            href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
