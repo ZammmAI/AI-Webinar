@@ -59,9 +59,7 @@ export function Confirmation({ data, onReset }: ConfirmationProps) {
           </div>
           <div>
             <p className="text-teal-100/70 text-sm font-semibold uppercase tracking-widest text-[10px]">Selected Session</p>
-            <p className="text-emerald-300 text-lg font-bold">
-              {data.session_date === '2026-05-02' ? 'May 02, 2026' : 'May 01, 2026'}
-            </p>
+            <p className="text-emerald-300 text-lg font-bold">May 06, 2026</p>
           </div>
           <div>
             <p className="text-teal-100/70 text-sm font-semibold uppercase tracking-widest text-[10px]">Registry Status</p>

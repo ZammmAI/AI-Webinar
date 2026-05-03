@@ -56,7 +56,7 @@ export function Hero() {
           </div>
           <div>
             <p className="text-teal-100/50 text-[10px] uppercase tracking-widest font-bold">Date</p>
-            <p className="text-white font-semibold text-sm">May 01/02, 2026</p>
+            <p className="text-white font-semibold text-sm">May 06, 2026</p>
           </div>
         </div>
         <div className="flex items-center gap-3">

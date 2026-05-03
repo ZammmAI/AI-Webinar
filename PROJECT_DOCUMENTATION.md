@@ -60,7 +60,7 @@ The site manages a "Hard Cap" of 100 seats but remains open for unlimited commun
 | `email` | TEXT | Validated email address. |
 | `phone` | TEXT | Formatted with `+94` prefix. |
 | `age` | TEXT | Relaxed range (1–120). |
-| `session_date` | TEXT | Selected webinar date (`2026-05-01` or `2026-05-02`). |
+| `session_date` | TEXT | Selected webinar date (`2026-05-06`). |
 | `role` | TEXT | Journey identifier (e.g., student, founder). |
 | `status` | TEXT | `confirmed` or `waitlist`. |
 | `created_at` | TIMESTAMPTZ | Auto-generated timestamp for sorting. |
