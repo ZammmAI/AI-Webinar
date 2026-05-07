@@ -44,7 +44,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     resolver: zodResolver(registrationSchema),
     mode: 'onTouched',
     defaultValues: {
-      session_date: '2026-05-06',
+      session_date: '2026-05-09',
       role: 'developer',
     }
   });
