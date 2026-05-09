@@ -13,7 +13,7 @@ export const registrationSchema = z.object({
     .min(9, "Too short (min 9 digits)")
     .max(10, "Too long (max 10 digits)")
     .regex(/^[0-9]+$/, "Numeric digits only"),
-  session_date: z.literal("2026-05-06"),
+  session_date: z.literal("2026-05-16"),
   role: z.enum(["developer", "designer", "entrepreneur", "student", "manager", "other"]),
 });
 
