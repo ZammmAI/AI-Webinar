@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Upload, CheckCircle2, AlertCircle, Building2, User, Phone, Mail, CreditCard, Info } from 'lucide-react';
+import { X, Upload, CheckCircle2, Building2, User, Phone, Mail, CreditCard, Info, ChevronLeft, ChevronRight, ArrowLeftRight } from 'lucide-react';
 import { courseRegistrationSchema, CourseRegistrationData } from '../../lib/schema';
 import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
@@ -18,10 +18,31 @@ interface CourseModalProps {
 
 type Step = 'payment' | 'form' | 'confirmation' | 'success';
 
+const BANK_ACCOUNTS = [
+  {
+    id: 'commercial',
+    name: 'Commercial Bank PLC',
+    logo: '/Commercial_Bank_logo.svg.png',
+    branch: 'KULIYAPITIYA',
+    accountName: 'W M B S DISSANAYAKE',
+    accountNumber: '8030237458',
+  },
+  {
+    id: 'seylan',
+    name: 'Seylan Bank PLC',
+    logo: '/Seylan_Transparent.png',
+    branch: 'KULIYAPITIYA',
+    accountName: 'W M B S DISSANAYAKE',
+    accountNumber: '044013963778120',
+  },
+];
+
 export function CourseModal({ course, onClose }: CourseModalProps) {
   const [step, setStep] = useState<Step>('payment');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [selectedBankIndex, setSelectedBankIndex] = useState(0);
+  const selectedBank = BANK_ACCOUNTS[selectedBankIndex];
 
   const {
     register,
@@ -91,9 +112,9 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
 
       setStep('success');
       toast.success('Registration submitted successfully!');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      toast.error(error.message || 'Something went wrong. Please try again.');
+      toast.error(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -105,6 +126,18 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
       const isValid = await trigger();
       if (isValid) setStep('confirmation');
     }
+  };
+
+  const showPreviousBank = () => {
+    setSelectedBankIndex((current) =>
+      current === 0 ? BANK_ACCOUNTS.length - 1 : current - 1
+    );
+  };
+
+  const showNextBank = () => {
+    setSelectedBankIndex((current) =>
+      current === BANK_ACCOUNTS.length - 1 ? 0 : current + 1
+    );
   };
 
   return (
@@ -158,22 +191,77 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                     </div>
                   </div>
 
+                  <div className="mb-5">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <button
+                        type="button"
+                        onClick={showPreviousBank}
+                        aria-label="Show previous bank"
+                        className="w-10 h-10 rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:border-emerald-400/60 hover:bg-emerald-500/10 transition-colors flex items-center justify-center shrink-0"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+
+                      <div className="min-w-0 flex-1 rounded-2xl bg-white p-4 sm:p-5 shadow-xl shadow-black/20 border border-white/80">
+                        <img
+                          src={selectedBank.logo}
+                          alt={`${selectedBank.name} logo`}
+                          className="h-12 sm:h-16 w-full object-contain"
+                        />
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={showNextBank}
+                        aria-label="Show next bank"
+                        className="w-10 h-10 rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:border-emerald-400/60 hover:bg-emerald-500/10 transition-colors flex items-center justify-center shrink-0"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 rounded-2xl bg-slate-950/50 border border-white/10 p-1">
+                      {BANK_ACCOUNTS.map((bank, index) => {
+                        const isActive = selectedBankIndex === index;
+                        return (
+                          <button
+                            key={bank.id}
+                            type="button"
+                            onClick={() => setSelectedBankIndex(index)}
+                            className={`min-h-11 rounded-xl px-3 text-xs sm:text-sm font-bold transition-all ${
+                              isActive
+                                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
+                                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                            }`}
+                          >
+                            {bank.name.replace(' Bank PLC', '')}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-3 flex items-center justify-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300/80">
+                      <ArrowLeftRight className="w-3.5 h-3.5" />
+                      <span>Swap bank details</span>
+                    </div>
+                  </div>
+
                   <div className="space-y-2 sm:space-y-3 text-slate-300 text-xs sm:text-sm">
                     <div className="flex justify-between py-1.5 sm:py-2 border-b border-white/5">
                       <span>Bank</span>
-                      <span className="text-white font-semibold">Commercial Bank PLC</span>
+                      <span className="text-white font-semibold text-right">{selectedBank.name}</span>
                     </div>
                     <div className="flex justify-between py-1.5 sm:py-2 border-b border-white/5">
                       <span>Branch</span>
-                      <span className="text-white font-semibold">KULIYAPITIYA</span>
+                      <span className="text-white font-semibold text-right">{selectedBank.branch}</span>
                     </div>
                     <div className="flex justify-between py-1.5 sm:py-2 border-b border-white/5">
                       <span>Account Name</span>
-                      <span className="text-white font-semibold">W M B S DISSANAYAKE</span>
+                      <span className="text-white font-semibold text-right">{selectedBank.accountName}</span>
                     </div>
                     <div className="flex justify-between py-1.5 sm:py-2">
                       <span>Account Number</span>
-                      <span className="text-white font-semibold">8030237458</span>
+                      <span className="text-white font-semibold text-right">{selectedBank.accountNumber}</span>
                     </div>
                   </div>
                 </div>
@@ -326,8 +414,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-3xl rounded-full" />
 
                   <div className="flex items-center gap-3 mb-6">
-                    <AlertCircle className="w-6 h-6 text-red-500" />
-                    <h4 className="text-lg sm:text-xl font-bold text-red-500 uppercase tracking-tight">Confirm Your Details</h4>
+                    <h4 className="text-lg sm:text-xl font-bold text-red-500 uppercase tracking-tight">Re-Confirm Your Details</h4>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6 gap-x-8 text-xs sm:text-sm">
@@ -364,7 +451,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
                   <button
                     onClick={() => setStep('form')}
                     disabled={isSubmitting}
@@ -375,9 +462,9 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                   <button
                     onClick={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className="w-full sm:flex-[2] py-3.5 sm:py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg shadow-red-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+                    className="w-full sm:flex-[2] py-3.5 sm:py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Confirm & Submit'}
+                    {isSubmitting ? 'Submitting...' : 'Confirm'}
                     {!isSubmitting && <CheckCircle2 className="w-5 h-5" />}
                   </button>
                 </div>
