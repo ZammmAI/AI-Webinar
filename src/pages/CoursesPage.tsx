@@ -10,8 +10,7 @@ const COURSES = [
     title: 'THE AI PATH',
     description: 'Understand, use, and build with AI, without the confusion.',
     image: '/ai.jpg',
-    originalPrice: 'Rs. 55,000',
-    price: 'Rs. 35,000',
+    price: 'Rs. 55,000',
     category: 'AI Path',
   },
   {
@@ -19,8 +18,7 @@ const COURSES = [
     title: 'THE CREATOR PATH',
     description: 'Turn ideas into content and systems that grow audiences.',
     image: '/creator.jpg',
-    originalPrice: 'Rs. 55,000',
-    price: 'Rs. 35,000',
+    price: 'Rs. 55,000',
     category: 'Creator Path',
   },
   {
@@ -28,8 +26,7 @@ const COURSES = [
     title: 'THE YOUTH PATH',
     description: 'Learn digital skills through building, creating, and play.',
     image: '/youth.jpg',
-    originalPrice: 'Rs. 55,000',
-    price: 'Rs. 35,000',
+    price: 'Rs. 55,000',
     category: 'Youth Path',
   },
   {
@@ -37,8 +34,7 @@ const COURSES = [
     title: 'THE MARKETING PATH',
     description: 'Learn digital Marketing skills through AI.',
     image: '/Marketing.png',
-    originalPrice: 'Rs. 55,000',
-    price: 'Rs. 35,000',
+    price: 'Rs. 55,000',
     category: 'Digital Marketing Path',
   },
 ];

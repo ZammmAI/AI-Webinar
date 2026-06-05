@@ -6,6 +6,7 @@ import { X, Upload, CheckCircle2, Building2, User, Phone, Mail, CreditCard, Info
 import { courseRegistrationSchema, CourseRegistrationData } from '../../lib/schema';
 import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
+import { PROMO_COURSE_PRICE, isApprovedPromoCode } from '../../lib/promoCode';
 
 interface CourseModalProps {
   course: {
@@ -42,7 +43,12 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [selectedBankIndex, setSelectedBankIndex] = useState(0);
+  const [promoCodeInput, setPromoCodeInput] = useState('');
+  const [promoApproved, setPromoApproved] = useState(false);
+  const [promoError, setPromoError] = useState('');
+  const [promoAnimationKey, setPromoAnimationKey] = useState(0);
   const selectedBank = BANK_ACCOUNTS[selectedBankIndex];
+  const effectiveCoursePrice = promoApproved ? PROMO_COURSE_PRICE : course.price;
 
   const {
     register,
@@ -56,6 +62,25 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
       gender: 'male'
     }
   });
+
+  const handlePromoCodeChange = (value: string) => {
+    setPromoCodeInput(value);
+    setPromoError('');
+    if (promoApproved) setPromoApproved(false);
+  };
+
+  const applyPromoCode = () => {
+    if (isApprovedPromoCode(promoCodeInput)) {
+      setPromoCodeInput('');
+      setPromoApproved(true);
+      setPromoError('');
+      setPromoAnimationKey((current) => current + 1);
+      return;
+    }
+
+    setPromoApproved(false);
+    setPromoError('Invalid promo code. Please check and try again.');
+  };
 
   const onSubmit = async (data: CourseRegistrationData) => {
     setIsSubmitting(true);
@@ -98,7 +123,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
           ...data,
           courseId: course.id,
           courseTitle: course.title,
-          coursePrice: course.price,
+          coursePrice: effectiveCoursePrice,
           receiptUrl: publicUrl
         },
       });
@@ -181,14 +206,16 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                 className="space-y-6"
               >
                 <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl sm:rounded-3xl p-5 sm:p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-emerald-500 rounded-2xl text-white">
-                      <Building2 className="w-6 h-6" />
-                    </div>
-                    <div>
+                  <div className="flex items-center justify-between gap-4 mb-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="p-3 bg-emerald-500 rounded-2xl text-white shrink-0">
+                        <Building2 className="w-6 h-6" />
+                      </div>
                       <p className="text-emerald-500 text-sm font-bold">Bank Transfer Details</p>
-                      <p className="text-white font-medium text-sm sm:text-base">Please pay {course.price}</p>
                     </div>
+                    <p className="text-white font-bold text-base sm:text-lg text-right shrink-0">
+                      {effectiveCoursePrice}
+                    </p>
                   </div>
 
                   <div className="mb-5">
@@ -370,6 +397,66 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                     </div>
                   </div>
 
+                  <div className="space-y-2 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <AnimatePresence>
+                      {!promoApproved && (
+                        <motion.div
+                          initial={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="flex flex-col sm:flex-row sm:items-end gap-3 overflow-hidden"
+                        >
+                          <div className="flex-1 space-y-2">
+                            <label className="text-sm font-medium text-slate-400 ml-1">Promo Code</label>
+                            <input
+                              type="text"
+                              value={promoCodeInput}
+                              onChange={(event) => handlePromoCodeChange(event.target.value)}
+                              className="w-full bg-slate-950/40 border border-white/10 rounded-2xl py-3 px-4 text-white tracking-wide focus:border-emerald-500 outline-none transition-all"
+                              placeholder="Enter promo code"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={applyPromoCode}
+                            className="w-full sm:w-auto px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-500/20"
+                          >
+                            Apply
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+                      <p className="text-slate-400">
+                        Amount: <span className="text-white font-bold">{effectiveCoursePrice}</span>
+                      </p>
+                      <AnimatePresence mode="wait">
+                        {promoApproved && (
+                          <motion.p
+                            key={promoAnimationKey}
+                            initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                            transition={{ type: 'spring', stiffness: 420, damping: 24 }}
+                            className="text-emerald-400 font-semibold flex items-center gap-1.5"
+                          >
+                            <motion.span
+                              initial={{ scale: 0, rotate: -45 }}
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ type: 'spring', stiffness: 520, damping: 18, delay: 0.08 }}
+                              className="inline-flex"
+                            >
+                              <CheckCircle2 className="w-4 h-4" />
+                            </motion.span>
+                            Promo approved
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    {promoError && <p className="text-red-500 text-xs ml-1">{promoError}</p>}
+                  </div>
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-400 ml-1">Upload Payment Receipt</label>
                     <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/10 hover:border-emerald-500/50 rounded-2xl cursor-pointer bg-white/5 transition-all group">
@@ -437,6 +524,10 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
                     <div>
                       <p className="text-slate-500 mb-0.5 sm:mb-1">Age / Gender</p>
                       <p className="text-white font-bold text-base sm:text-lg uppercase">{getValues('age')} / {getValues('gender')}</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-500 mb-0.5 sm:mb-1">Amount</p>
+                      <p className="text-white font-bold text-base sm:text-lg">{effectiveCoursePrice}</p>
                     </div>
                     <div>
                       <p className="text-slate-500 mb-0.5 sm:mb-1">Receipt</p>
