@@ -6,13 +6,12 @@ interface CourseCardProps {
   title: string;
   description: string;
   image: string;
-  originalPrice: string;
   price: string;
   category: string;
   onEnroll: (id: string) => void;
 }
 
-export function CourseCard({ id, title, description, image, originalPrice, price, category, onEnroll }: CourseCardProps) {
+export function CourseCard({ id, title, description, image, price, category, onEnroll }: CourseCardProps) {
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.02 }}
@@ -59,9 +58,6 @@ export function CourseCard({ id, title, description, image, originalPrice, price
                 Investment
               </span>
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span className="text-lg sm:text-xl font-bold text-slate-500 line-through decoration-emerald-400/70 decoration-2">
-                  {originalPrice}
-                </span>
                 <span className="text-xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 drop-shadow-sm">
                   {price}
                 </span>
