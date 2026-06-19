@@ -6,7 +6,7 @@ import { X, Upload, CheckCircle2, Building2, User, Phone, Mail, CreditCard, Info
 import { courseRegistrationSchema, CourseRegistrationData } from '../../lib/schema';
 import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
-import { PROMO_COURSE_PRICE, isApprovedPromoCode } from '../../lib/promoCode';
+import { getPromoDiscount } from '../../lib/promoCode';
 
 interface CourseModalProps {
   course: {
@@ -47,8 +47,9 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
   const [promoApproved, setPromoApproved] = useState(false);
   const [promoError, setPromoError] = useState('');
   const [promoAnimationKey, setPromoAnimationKey] = useState(0);
+  const [promoDiscountedPrice, setPromoDiscountedPrice] = useState<string | null>(null);
   const selectedBank = BANK_ACCOUNTS[selectedBankIndex];
-  const effectiveCoursePrice = promoApproved ? PROMO_COURSE_PRICE : course.price;
+  const effectiveCoursePrice = promoApproved && promoDiscountedPrice ? promoDiscountedPrice : course.price;
 
   const {
     register,
@@ -66,11 +67,16 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
   const handlePromoCodeChange = (value: string) => {
     setPromoCodeInput(value);
     setPromoError('');
-    if (promoApproved) setPromoApproved(false);
+    if (promoApproved) {
+      setPromoApproved(false);
+      setPromoDiscountedPrice(null);
+    }
   };
 
   const applyPromoCode = () => {
-    if (isApprovedPromoCode(promoCodeInput)) {
+    const discounted = getPromoDiscount(promoCodeInput, course.id);
+    if (discounted) {
+      setPromoDiscountedPrice(discounted);
       setPromoCodeInput('');
       setPromoApproved(true);
       setPromoError('');
@@ -79,6 +85,7 @@ export function CourseModal({ course, onClose }: CourseModalProps) {
     }
 
     setPromoApproved(false);
+    setPromoDiscountedPrice(null);
     setPromoError('Invalid promo code. Please check and try again.');
   };
 

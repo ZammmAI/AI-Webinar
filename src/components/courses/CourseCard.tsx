@@ -7,11 +7,12 @@ interface CourseCardProps {
   description: string;
   image: string;
   price: string;
+  strikePrice?: string;
   category: string;
   onEnroll: (id: string) => void;
 }
 
-export function CourseCard({ id, title, description, image, price, category, onEnroll }: CourseCardProps) {
+export function CourseCard({ id, title, description, image, price, strikePrice, category, onEnroll }: CourseCardProps) {
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.02 }}
@@ -53,16 +54,21 @@ export function CourseCard({ id, title, description, image, price, category, onE
           
           {/* Price & Badge */}
           <div className="flex items-end justify-between pt-3 sm:pt-4 border-t border-white/10">
-            <div className="flex flex-col gap-1">
-              <span className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold">
-                Investment
-              </span>
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span className="text-xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 drop-shadow-sm">
-                  {price}
+            <div className="flex flex-col gap-0.5">
+                <span className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold">
+                  Investment
                 </span>
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  {strikePrice && (
+                    <span className="text-sm text-slate-500 line-through font-semibold">
+                      {strikePrice}
+                    </span>
+                  )}
+                  <span className="text-xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 drop-shadow-sm">
+                    {price}
+                  </span>
+                </div>
               </div>
-            </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">
               <Star className="w-3 h-3 fill-emerald-500" />
               Premium

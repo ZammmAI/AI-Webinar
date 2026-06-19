@@ -11,6 +11,7 @@ const COURSES = [
     description: 'Understand, use, and build with AI, without the confusion.',
     image: '/ai.jpg',
     price: 'Rs. 55,000',
+    strikePrice: undefined,
     category: 'AI Path',
   },
   {
@@ -19,6 +20,7 @@ const COURSES = [
     description: 'Turn ideas into content and systems that grow audiences.',
     image: '/creator.jpg',
     price: 'Rs. 55,000',
+    strikePrice: undefined,
     category: 'Creator Path',
   },
   {
@@ -27,6 +29,7 @@ const COURSES = [
     description: 'Learn digital skills through building, creating, and play.',
     image: '/youth.jpg',
     price: 'Rs. 55,000',
+    strikePrice: undefined,
     category: 'Youth Path',
   },
   {
@@ -35,11 +38,30 @@ const COURSES = [
     description: 'Learn digital Marketing skills through AI.',
     image: '/Marketing.png',
     price: 'Rs. 55,000',
+    strikePrice: undefined,
     category: 'Digital Marketing Path',
+  },
+  {
+    id: 'interview-mastery',
+    title: 'INTERVIEW MASTERY',
+    description: 'Land your dream job with confidence. Master every stage of the interview process from preparation to offer.',
+    image: '/interview-mastery.webp',
+    price: 'Rs. 9,800',
+    strikePrice: 'Rs. 14,000',
+    category: 'Interview Mastery',
+  },
+  {
+    id: 'interview-mastery-pro',
+    title: 'INTERVIEW MASTERY PRO',
+    description: 'The ultimate interview toolkit. Go beyond basics and secure top-tier opportunities with elite-level techniques.',
+    image: '/interview-mastery-pro.webp',
+    price: 'Rs. 13,800',
+    strikePrice: 'Rs. 20,000',
+    category: 'Interview Mastery',
   },
 ];
 
-const CATEGORIES = ['All', 'AI Path', 'Creator Path', 'Youth Path', 'Digital Marketing Path'];
+const CATEGORIES = ['All', 'AI Path', 'Creator Path', 'Youth Path', 'Digital Marketing Path', 'Interview Mastery'];
 
 export function CoursesPage() {
   const prefersReducedMotion = useReducedMotion();
@@ -55,7 +77,7 @@ export function CoursesPage() {
     <div className="min-h-screen bg-[#020617] relative overflow-hidden pt-20 md:pt-28 pb-12 px-4">
       <SEO
         title="AI Courses | Master the Knowledge Paths"
-        description="Choose from our 4 exclusive AI knowledge paths: The AI Path, The Creator Path, The Youth Path, and The Marketing Path."
+        description="Choose from our 6 exclusive knowledge paths: The AI Path, The Creator Path, The Youth Path, The Marketing Path, Interview Mastery, and Interview Mastery Pro."
         url="https://ai.theaob.lk/courses"
       />
 
@@ -146,7 +168,7 @@ export function CoursesPage() {
         {/* Course Grid */}
         <motion.div
           layout
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course, index) => (
